@@ -1,5 +1,7 @@
 This repository is a Liquidity Module for the Nova SDK.
 
+![image](assets/maker.png)
+
 Liquidity Modules allow relayers to instantly fill their orderbooks and bootstrap liquidity with minimal effort. This particular module uses a [Constant Product Market Making Model](https://github.com/novaprotocolio/amm-bots#constant-product-amm), discussed in greater detail below.
 
 #### Using this repository
