@@ -1,5 +1,5 @@
 # compile env
-FROM golang:1.12
+FROM golang:1.11
 COPY . /amm-bots
 WORKDIR /amm-bots
 

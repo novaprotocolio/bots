@@ -16,10 +16,6 @@ Automated Market Making (AMM) bots provide liquidity to a marketplace through us
 
 This repository is setup to run naturally on the [Nova Dex Scaffold](https://github.com/novaprotocolio/nova-scaffold-dex). For use on other marketplaces, you could modify the code snippets below.
 
-### Build docker
-
-`docker build -q -t novaprotocolio/amm-bots:latest .`
-
 ### Running from source
 
 ```
