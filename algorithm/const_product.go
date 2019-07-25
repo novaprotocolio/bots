@@ -1,8 +1,9 @@
 package algorithm
 
 import (
-	"github.com/shopspring/decimal"
 	"math"
+
+	"github.com/shopspring/decimal"
 )
 
 type ConstProductLadder struct {
@@ -36,9 +37,11 @@ func GenerateConstProductLadders(
 	lastBaseAmount = baseTokenAmount
 	for true {
 		upPrice = downPrice.Mul(decimal.New(1, 0).Add(priceGap))
-		if upPrice.GreaterThan(maxPrice) {
+		// no upPrice or greater than maxPrice
+		if upPrice.GreaterThan(maxPrice) || upPrice.IsZero() {
 			break
 		}
+
 		f, _ := product.Div(upPrice).Float64()
 		newBaseAmount := decimal.NewFromFloat(math.Sqrt(f))
 		ladders = append(ladders, ConstProductLadder{

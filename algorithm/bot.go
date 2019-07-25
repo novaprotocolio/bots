@@ -1,12 +1,13 @@
 package algorithm
 
 import (
+	"sync"
+	"time"
+
 	"github.com/novaprotocolio/amm-bots/client"
 	"github.com/novaprotocolio/amm-bots/utils"
 	"github.com/shopspring/decimal"
 	"github.com/sirupsen/logrus"
-	"sync"
-	"time"
 )
 
 func NewConstProductBot(
@@ -64,6 +65,7 @@ func (b *ConstProductBot) Run() {
 func (b *ConstProductBot) init() {
 	_, _ = b.client.CancelAllPendingOrders()
 	baseTokenAmount, _, err := b.baseToken.GetBalance(b.web3Url, b.client.Address)
+
 	if err != nil {
 		panic(err)
 	}
@@ -71,6 +73,7 @@ func (b *ConstProductBot) init() {
 	if err != nil {
 		panic(err)
 	}
+
 	ladders, err := GenerateConstProductLadders(
 		*baseTokenAmount,
 		*quoteTokenAmount,

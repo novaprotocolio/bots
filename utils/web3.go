@@ -1,6 +1,6 @@
 package utils
 
-import (
+import (	
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -27,16 +27,21 @@ func (erc *ERC20) GetBalance(web3url string, address string) (balance *decimal.D
 	if !erc.Initialized {
 		erc.init(web3url)
 	}
-	data := "0x70a08231" + ExtendAddressTo256bit(address)
+	data := "0x70a08231" + ExtendAddressTo256bit(address)	
+	
 	resp, err := Web3Call(web3url, erc.Address, data)
 	if err != nil {
 		return &decimal.Zero, &decimal.Zero, errors.New("get erc20 balance failed")
 	}
 	var dataContainer IJsonRpcResString
 	json.Unmarshal([]byte(resp), &dataContainer)
-	rawValue := ParseHexToDecimal(dataContainer.Result[2:], 0)
-	value := ParseHexToDecimal(dataContainer.Result[2:], int32(erc.Decimal*-1))
-	return value, rawValue, nil
+	if len(dataContainer.Result) > 0 {	
+		rawValue := ParseHexToDecimal(dataContainer.Result[2:], 0)	
+		value := ParseHexToDecimal(dataContainer.Result[2:], int32(erc.Decimal*-1))
+		return value, rawValue, nil
+	}
+
+	return nil, nil, fmt.Errorf("Empty balance token: %v", resp)
 }
 
 func Web3Call(url string, contractAddress string, data string) (string, error) {
